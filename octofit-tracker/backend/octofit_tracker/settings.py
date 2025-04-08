@@ -85,6 +85,9 @@ DATABASES = {
     }
 }
 
+# Update the database engine to use djongo
+DATABASES['default']['ENGINE'] = 'djongo'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
