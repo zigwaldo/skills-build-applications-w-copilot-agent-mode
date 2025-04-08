@@ -20,13 +20,14 @@ def populate_users():
 def populate_teams():
     users = list(User.objects.all())
     teams = [
-        {"name": "Team Alpha", "members": random.sample(users, 2)},
-        {"name": "Team Beta", "members": random.sample(users, 2)},
+        {"name": "Team Alpha", "members": random.sample(users, min(len(users), 2))},
+        {"name": "Team Beta", "members": random.sample(users, min(len(users), 2))},
     ]
     for team_data in teams:
         team, created = Team.objects.get_or_create(name=team_data["name"])
-        team.members.set(team_data["members"])
-        team.save()
+        if created:
+            team.members.add(*team_data["members"])
+            team.save()
 
 def populate_workouts():
     workouts = [
